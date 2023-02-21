@@ -35,7 +35,7 @@ export const AppFilter = ({
   };
 
   const ShowOnlyHighSalary = () => {
-    const newList = DBBackup.filter((elem) => elem.salary >= 1000);
+    const newList = DBBackup.filter(({salary}) => salary >= 1000);
     setDBState(newList);
     setActiveBtn(filterState.high);
   };

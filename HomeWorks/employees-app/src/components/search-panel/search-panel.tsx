@@ -21,8 +21,8 @@ export const SearchPanel = ({
   const searchHandler = (event: React.FormEvent<HTMLInputElement>) => {
     const currentParam: string = event.currentTarget.value;
     setInputSearchParam(currentParam);
-    const newList = DBBackup.filter((elem) =>
-      elem.name.toLocaleLowerCase().includes(currentParam.toLowerCase())
+    const newList = DBBackup.filter(({ name }) =>
+      name.toLocaleLowerCase().includes(currentParam.toLowerCase())
     );
     setDBState(newList);
     console.log(newList);

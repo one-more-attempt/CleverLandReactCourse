@@ -31,7 +31,7 @@ export const EmployeesListItem = ({
   const deleteItemHandler = () => {
     console.log(`delete`);
     const newList: EmployeeListTypes[] = employeeDB.filter(
-      (elem) => elem.id !== listItem.id
+      ({id}) => id !== listItem.id
     );
     setDBState(newList);
   };

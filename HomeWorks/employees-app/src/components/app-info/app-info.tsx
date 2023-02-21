@@ -10,7 +10,7 @@ interface AppInfoProps {
 export const AppInfo = ({ employeeDB, DBBackup }: AppInfoProps) => {
   const employeeCount = DBBackup.length;
   const EmployeeWhoHaveBonus = DBBackup.filter(
-    (elem) => elem.increase === true
+    ({increase}) => increase === true
   ).length;
 
   return (

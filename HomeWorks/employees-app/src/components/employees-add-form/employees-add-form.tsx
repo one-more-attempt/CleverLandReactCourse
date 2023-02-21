@@ -12,7 +12,7 @@ interface EmployeesAddFormProps {
 export const EmployeesAddForm = ({
   employeeDB,
   setDBState,
-  setDBBackup
+  setDBBackup,
 }: EmployeesAddFormProps) => {
   const [inputName, setInputName] = useState<string>("");
   const [inputSalary, setInputSalary] = useState<string>("");
@@ -32,7 +32,7 @@ export const EmployeesAddForm = ({
   const addNewItemHandler = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputSalary.length >= 2 && inputName.length >= 5) {
-      let lastID: number = Math.max(...employeeDB.map((item) => item.id));
+      let lastID: number = Math.max(...employeeDB.map(({ id }) => id));
       const newID = lastID + 1;
 
       const newItem: EmployeeListTypes = {
@@ -44,7 +44,7 @@ export const EmployeesAddForm = ({
 
       const newItemList: EmployeeListTypes[] = [...employeeDB, newItem];
       setDBState(newItemList);
-      setDBBackup(newItemList)
+      setDBBackup(newItemList);
       setInputName("");
       setInputSalary("");
     }
