@@ -1,14 +1,14 @@
-import "./app-filter.css";
-import { EmployeeListTypes } from "../../interfaces/interfaces";
-import classNames from "classnames";
+import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
-import React from "react";
+import classNames from "classnames";
+import type { EmployeeListTypes } from "../../types/types";
+import "./app-filter.css";
 
 interface AppFilterProps {
   employeeDB: EmployeeListTypes[];
-  setDBState: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
   DBBackup: EmployeeListTypes[];
-  setDBBackup: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
 }
 
 export const AppFilter = ({
@@ -17,51 +17,59 @@ export const AppFilter = ({
   employeeDB,
   setDBState,
 }: AppFilterProps) => {
-  const [activeBtn, setActiveBtn] = useState<string>("all");
+  enum filterState {
+    "all",
+    "encreased",
+    "high",
+  }
+  const [activeBtn, setActiveBtn] = useState<filterState>(filterState.all);
 
   const ShowAllEmploees = () => {
-    const newList = DBBackup;
-    setDBState(newList);
-    setActiveBtn("all");
+    setDBState(DBBackup);
+    setActiveBtn(filterState.all);
   };
   const ShowOnlyIncreasedEmployes = () => {
     const newList = DBBackup.filter((elem) => elem.increase === true);
-    console.log(DBBackup);
     setDBState(newList);
-    setActiveBtn("encreased");
+    setActiveBtn(filterState.encreased);
   };
 
   const ShowOnlyHighSalary = () => {
     const newList = DBBackup.filter((elem) => elem.salary >= 1000);
     setDBState(newList);
-    setActiveBtn("high");
+    setActiveBtn(filterState.high);
   };
 
   return (
     <div className="btn-group">
       <button
         type="button"
-        className={
-          activeBtn === "all" ? `btn btn-light` : `btn btn-outline-light`
-        }
+        className={`btn ${
+          activeBtn === filterState.all ? "btn-light" : "btn-outline-light"
+        }      
+          `}
         onClick={ShowAllEmploees}
       >
         Все сотрудники
       </button>
       <button
         type="button"
-        className={
-          activeBtn === "encreased" ? `btn btn-light` : `btn btn-outline-light`
-        }
+        className={`btn ${
+          activeBtn === filterState.encreased
+            ? "btn-light"
+            : "btn-outline-light"
+        }      
+          `}
         onClick={ShowOnlyIncreasedEmployes}
       >
         На повышение
       </button>
       <button
         type="button"
-        className={
-          activeBtn === "high" ? `btn btn-light` : `btn btn-outline-light`
-        }
+        className={`btn ${
+          activeBtn === filterState.high ? "btn-light" : "btn-outline-light"
+        }      
+          `}
         onClick={ShowOnlyHighSalary}
       >
         З/П больше 1000$

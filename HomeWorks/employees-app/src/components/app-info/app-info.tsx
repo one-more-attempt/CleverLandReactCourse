@@ -1,6 +1,6 @@
+import type { EmployeeListTypes } from "../../types/types";
 import "./app-info.css";
-import React from "react";
-import { EmployeeListTypes } from "../../interfaces/interfaces";
+
 
 interface AppInfoProps {
   employeeDB: EmployeeListTypes[];
@@ -8,8 +8,8 @@ interface AppInfoProps {
 }
 
 export const AppInfo = ({ employeeDB, DBBackup }: AppInfoProps) => {
-  const employeeCount: number = DBBackup.length;
-  const EmployeeWhoHaveBonus: number = DBBackup.filter(
+  const employeeCount = DBBackup.length;
+  const EmployeeWhoHaveBonus = DBBackup.filter(
     (elem) => elem.increase === true
   ).length;
 

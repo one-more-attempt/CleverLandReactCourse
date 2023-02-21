@@ -1,11 +1,12 @@
-import "./employees-add-form.css";
+import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
-import { EmployeeListTypes } from "../../interfaces/interfaces";
+import type { EmployeeListTypes } from "../../types/types";
+import "./employees-add-form.css";
 
 interface EmployeesAddFormProps {
   employeeDB: EmployeeListTypes[];
-  setDBState: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
-  setDBBackup: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
 }
 
 export const EmployeesAddForm = ({

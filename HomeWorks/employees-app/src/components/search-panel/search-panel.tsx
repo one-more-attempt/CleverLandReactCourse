@@ -1,12 +1,13 @@
-import "./search-panel.css";
-import { EmployeeListTypes } from "../../interfaces/interfaces";
 import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
+import type { EmployeeListTypes } from "../../types/types";
+import "./search-panel.css";
 
 interface SearchPanelProps {
   employeeDB: EmployeeListTypes[];
-  setDBState: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
   DBBackup: EmployeeListTypes[];
-  setDBBackup: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
 }
 
 export const SearchPanel = ({

@@ -1,11 +1,12 @@
-import {EmployeesListItem} from "../employees-list-item/employees-list-item";
+import { Dispatch, SetStateAction } from "react";
+import { EmployeesListItem } from "../employees-list-item/employees-list-item";
+import type { EmployeeListTypes } from "../../types/types";
 import "./employees-list.css";
-import { EmployeeListTypes } from "../../interfaces/interfaces";
 
 interface EmployeesListProps {
   employeeDB: EmployeeListTypes[];
-  setDBState: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
-  setDBBackup: React.Dispatch<React.SetStateAction<EmployeeListTypes[]>>;
+  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
 }
 
 export const EmployeesList = ({

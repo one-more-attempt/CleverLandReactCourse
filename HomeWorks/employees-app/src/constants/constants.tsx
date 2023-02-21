@@ -1,4 +1,4 @@
-import { EmployeeListTypes } from "../interfaces/interfaces";
+import type { EmployeeListTypes } from "../types/types";
 export const employeeDB: EmployeeListTypes[] = [
     {
       id: 1,
