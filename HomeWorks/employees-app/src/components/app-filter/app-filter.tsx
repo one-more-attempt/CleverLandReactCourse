@@ -29,7 +29,7 @@ export const AppFilter = ({
     setActiveBtn(filterState.all);
   };
   const ShowOnlyIncreasedEmployes = () => {
-    const newList = DBBackup.filter((elem) => elem.increase === true);
+    const newList = DBBackup.filter(({ increase }) => increase === true);
     setDBState(newList);
     setActiveBtn(filterState.encreased);
   };
