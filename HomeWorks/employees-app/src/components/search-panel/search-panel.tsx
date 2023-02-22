@@ -3,29 +3,28 @@ import { Dispatch, SetStateAction } from "react";
 import type { EmployeeListTypes } from "../../types/types";
 import "./search-panel.css";
 
-interface SearchPanelProps {
-  employeeDB: EmployeeListTypes[];
-  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  DBBackup: EmployeeListTypes[];
-  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-}
+type SearchPanelProps = {
+  employeesDBState: EmployeeListTypes[];
+  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  employeesDBBackup: EmployeeListTypes[];
+  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+};
 
 export const SearchPanel = ({
-  employeeDB,
-  setDBBackup,
-  DBBackup,
-  setDBState,
+  employeesDBState,
+  setEmployeesDBBackup,
+  employeesDBBackup,
+  setEmployeesDBState,
 }: SearchPanelProps) => {
-  const [inputSearchParam, setInputSearchParam] = useState<string>("");
+  const [inputSearchParam, setInputSearchParam] = useState("");
 
-  const searchHandler = (event: React.FormEvent<HTMLInputElement>) => {
+  const findEmployee = (event: React.FormEvent<HTMLInputElement>) => {
     const currentParam: string = event.currentTarget.value;
     setInputSearchParam(currentParam);
-    const newList = DBBackup.filter(({ name }) =>
+    const newList = employeesDBBackup.filter(({ name }) =>
       name.toLocaleLowerCase().includes(currentParam.toLowerCase())
     );
-    setDBState(newList);
-    console.log(newList);
+    setEmployeesDBState(newList);
   };
 
   return (
@@ -34,7 +33,7 @@ export const SearchPanel = ({
       className="form-control search-input"
       placeholder="Найти сотрудника"
       value={inputSearchParam}
-      onChange={searchHandler}
+      onChange={findEmployee}
     />
   );
 };

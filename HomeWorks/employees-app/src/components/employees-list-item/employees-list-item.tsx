@@ -4,20 +4,20 @@ import classNames from "classnames";
 import type { EmployeeListTypes } from "../../types/types";
 import "./employees-list-item.css";
 
-interface EmployeesListItemProps {
+type EmployeesListItemProps = {
   listItem: EmployeeListTypes;
   employeeDB: EmployeeListTypes[];
-  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-}
+  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+};
 
 export const EmployeesListItem = ({
   listItem,
   employeeDB,
-  setDBState,
-  setDBBackup,
+  setEmployeesDBState,
+  setEmployeesDBBackup,
 }: EmployeesListItemProps) => {
-  const increaseHandler = () => {
+  const increaseEmployee = () => {
     const newList: EmployeeListTypes[] = employeeDB.map((elem) => {
       if (elem.id === listItem.id) {
         elem.increase = !elem.increase;
@@ -25,21 +25,20 @@ export const EmployeesListItem = ({
       return elem;
     });
 
-    setDBState(newList);
+    setEmployeesDBState(newList);
   };
 
-  const deleteItemHandler = () => {
-    console.log(`delete`);
+  const deleteEmployee = () => {
     const newList: EmployeeListTypes[] = employeeDB.filter(
-      ({id}) => id !== listItem.id
+      ({ id }) => id !== listItem.id
     );
-    setDBState(newList);
+    setEmployeesDBState(newList);
   };
 
   const itemStyle = classNames(
     "list-group-item d-flex justify-content-between",
     {
-      increase: listItem.increase === true,
+      increase: listItem.increase,
     }
   );
 
@@ -55,7 +54,7 @@ export const EmployeesListItem = ({
         <button
           type="button"
           className="btn-cookie btn-sm "
-          onClick={increaseHandler}
+          onClick={increaseEmployee}
         >
           <i className="fas fa-cookie"></i>
         </button>
@@ -63,7 +62,7 @@ export const EmployeesListItem = ({
         <button
           type="button"
           className="btn-trash btn-sm "
-          onClick={deleteItemHandler}
+          onClick={deleteEmployee}
         >
           <i className="fas fa-trash"></i>
         </button>

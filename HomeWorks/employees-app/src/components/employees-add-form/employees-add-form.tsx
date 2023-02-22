@@ -3,48 +3,46 @@ import { useState } from "react";
 import type { EmployeeListTypes } from "../../types/types";
 import "./employees-add-form.css";
 
-interface EmployeesAddFormProps {
-  employeeDB: EmployeeListTypes[];
-  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-}
+type EmployeesAddFormProps = {
+  employeesDBState: EmployeeListTypes[];
+  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+};
 
 export const EmployeesAddForm = ({
-  employeeDB,
-  setDBState,
-  setDBBackup,
+  employeesDBState,
+  setEmployeesDBState,
+  setEmployeesDBBackup,
 }: EmployeesAddFormProps) => {
   const [inputName, setInputName] = useState<string>("");
   const [inputSalary, setInputSalary] = useState<string>("");
 
-  const inputNameChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    const newValue = event.currentTarget.value;
-    setInputName(newValue);
+  const changeInputName = (event: React.FormEvent<HTMLInputElement>) => {
+    const newInputNameValue = event.currentTarget.value;
+    setInputName(newInputNameValue);
   };
 
-  const inputSalaryChangeHandler = (
-    event: React.FormEvent<HTMLInputElement>
-  ) => {
-    const newValue = event.currentTarget.value;
-    setInputSalary(newValue);
+  const changeInputSalary = (event: React.FormEvent<HTMLInputElement>) => {
+    const newInputSalaryValue = event.currentTarget.value;
+    setInputSalary(newInputSalaryValue);
   };
 
-  const addNewItemHandler = (event: React.FormEvent<HTMLButtonElement>) => {
+  const addNewEmployee = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputSalary.length >= 2 && inputName.length >= 5) {
-      let lastID: number = Math.max(...employeeDB.map(({ id }) => id));
-      const newID = lastID + 1;
+      let currentLastIdInDB: number = Math.max(...employeesDBState.map(({ id }) => id));
+      const newLastID = currentLastIdInDB + 1;
 
-      const newItem: EmployeeListTypes = {
+      const newEmployeeItem: EmployeeListTypes = {
         name: inputName,
         salary: Number(inputSalary),
-        id: newID,
+        id: newLastID,
         increase: false,
       };
 
-      const newItemList: EmployeeListTypes[] = [...employeeDB, newItem];
-      setDBState(newItemList);
-      setDBBackup(newItemList);
+      const newItemList: EmployeeListTypes[] = [...employeesDBState, newEmployeeItem];
+      setEmployeesDBState(newItemList);
+      setEmployeesDBBackup(newItemList);
       setInputName("");
       setInputSalary("");
     }
@@ -59,7 +57,7 @@ export const EmployeesAddForm = ({
           className="form-control new-post-label"
           placeholder="Как его зовут?"
           value={inputName}
-          onChange={inputNameChangeHandler}
+          onChange={changeInputName}
         />
 
         <input
@@ -67,13 +65,13 @@ export const EmployeesAddForm = ({
           className="form-control new-post-label"
           placeholder="З/П в $?"
           value={inputSalary}
-          onChange={inputSalaryChangeHandler}
+          onChange={changeInputSalary}
         />
 
         <button
           type="submit"
           className="btn btn-outline-light"
-          onClick={addNewItemHandler}
+          onClick={addNewEmployee}
         >
           Добавить
         </button>

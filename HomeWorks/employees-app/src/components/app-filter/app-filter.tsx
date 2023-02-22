@@ -2,75 +2,68 @@ import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import classNames from "classnames";
 import type { EmployeeListTypes } from "../../types/types";
+import { FilterStates } from "../../enums/filterStates";
 import "./app-filter.css";
 
-interface AppFilterProps {
-  employeeDB: EmployeeListTypes[];
-  setDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  DBBackup: EmployeeListTypes[];
-  setDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-}
+type AppFilterProps = {
+  employeesDBState: EmployeeListTypes[];
+  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  employeesDBBackup: EmployeeListTypes[];
+  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+};
 
 export const AppFilter = ({
-  DBBackup,
-  setDBBackup,
-  employeeDB,
-  setDBState,
+  employeesDBBackup,
+  setEmployeesDBBackup,
+  employeesDBState,
+  setEmployeesDBState,
 }: AppFilterProps) => {
-  enum filterState {
-    "all",
-    "encreased",
-    "high",
-  }
-  const [activeBtn, setActiveBtn] = useState<filterState>(filterState.all);
+  const [activeBtn, setActiveBtn] = useState(FilterStates.All);
 
-  const ShowAllEmploees = () => {
-    setDBState(DBBackup);
-    setActiveBtn(filterState.all);
+  const showAllEmploees = () => {
+    setEmployeesDBState(employeesDBBackup);
+    setActiveBtn(FilterStates.All);
   };
-  const ShowOnlyIncreasedEmployes = () => {
-    const newList = DBBackup.filter(({ increase }) => increase === true);
-    setDBState(newList);
-    setActiveBtn(filterState.encreased);
+  const showOnlyIncreasedEmployes = () => {
+    const newList = employeesDBBackup.filter(
+      ({ increase }) => increase === true
+    );
+    setEmployeesDBState(newList);
+    setActiveBtn(FilterStates.OnlyEncreased);
   };
 
-  const ShowOnlyHighSalary = () => {
-    const newList = DBBackup.filter(({salary}) => salary >= 1000);
-    setDBState(newList);
-    setActiveBtn(filterState.high);
+  const showOnlyHighSalary = () => {
+    const newList = employeesDBBackup.filter(({ salary }) => salary >= 1000);
+    setEmployeesDBState(newList);
+    setActiveBtn(FilterStates.OnlyHigh);
   };
+
+  const checkButtonStatus = (status: FilterStates) =>
+    classNames("btn", {
+      "btn-light": activeBtn === status,
+      "btn-outline-light": activeBtn !== status,
+    });
 
   return (
     <div className="btn-group">
       <button
         type="button"
-        className={`btn ${
-          activeBtn === filterState.all ? "btn-light" : "btn-outline-light"
-        }      
-          `}
-        onClick={ShowAllEmploees}
+        className={checkButtonStatus(FilterStates.All)}
+        onClick={showAllEmploees}
       >
         Все сотрудники
       </button>
       <button
         type="button"
-        className={`btn ${
-          activeBtn === filterState.encreased
-            ? "btn-light"
-            : "btn-outline-light"
-        }      
-          `}
-        onClick={ShowOnlyIncreasedEmployes}
+        className={checkButtonStatus(FilterStates.OnlyEncreased)}
+        onClick={showOnlyIncreasedEmployes}
       >
         На повышение
       </button>
       <button
         type="button"
-        className={`btn ${
-          activeBtn === filterState.high ? "btn-light" : "btn-outline-light"
-        }      
-          `}
-        onClick={ShowOnlyHighSalary}
+        className={checkButtonStatus(FilterStates.OnlyHigh)}
+        onClick={showOnlyHighSalary}
       >
         З/П больше 1000$
       </button>

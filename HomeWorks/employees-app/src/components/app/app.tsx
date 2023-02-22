@@ -4,42 +4,42 @@ import { SearchPanel } from "../search-panel/search-panel";
 import { AppFilter } from "../app-filter/app-filter";
 import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
-import { employeeDB } from "../../constants/constants";
+import { employeeDB } from "../../constants/employeeDB";
 import type { EmployeeListTypes } from "../../types/types";
 import "./app.css";
 
 export const App = () => {
-  const [DBState, setDBState] = useState<EmployeeListTypes[]>(employeeDB);
-  const [DBBackup, setDBBackup] = useState<EmployeeListTypes[]>(DBState);
+  const [employeesDBState, setEmployeesDBState] = useState(employeeDB);
+  const [employeesDBBackup, setEmployeesDBBackup] = useState(employeesDBState);
 
   return (
     <div className="app">
-      <AppInfo DBBackup={DBBackup} employeeDB={DBState} />
+      <AppInfo employeesDBBackup={employeesDBBackup} employeesDBState={employeesDBState} />
 
       <div className="search-panel">
         <SearchPanel
-          DBBackup={DBBackup}
-          setDBBackup={setDBBackup}
-          employeeDB={DBState}
-          setDBState={setDBState}
+          employeesDBBackup={employeesDBBackup}
+          setEmployeesDBBackup={setEmployeesDBBackup}
+          employeesDBState={employeesDBState}
+          setEmployeesDBState={setEmployeesDBState}
         />
         <AppFilter
-          DBBackup={DBBackup}
-          setDBBackup={setDBBackup}
-          employeeDB={DBState}
-          setDBState={setDBState}
+          employeesDBBackup={employeesDBBackup}
+          setEmployeesDBBackup={setEmployeesDBBackup}
+          employeesDBState={employeesDBState}
+          setEmployeesDBState={setEmployeesDBState}
         />
       </div>
 
       <EmployeesList
-        employeeDB={DBState}
-        setDBState={setDBState}
-        setDBBackup={setDBBackup}
+        employeesDBState={employeesDBState}
+        setEmployeesDBState={setEmployeesDBState}
+        setEmployeesDBBackup={setEmployeesDBBackup}
       />
       <EmployeesAddForm
-        employeeDB={DBState}
-        setDBState={setDBState}
-        setDBBackup={setDBBackup}
+        employeesDBState={employeesDBState}
+        setEmployeesDBState={setEmployeesDBState}
+        setEmployeesDBBackup={setEmployeesDBBackup}
       />
     </div>
   );
