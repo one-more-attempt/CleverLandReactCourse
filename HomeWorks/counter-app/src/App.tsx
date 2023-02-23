@@ -18,15 +18,19 @@ class App extends Component<AppProps, StateProps> {
   }
 
   incrementCounter = () => {
-    this.setState({
-      currentCounterState: this.state.currentCounterState + 1,
-    });
+    if (this.state.currentCounterState < 10) {
+      this.setState((state) => ({
+        currentCounterState: state.currentCounterState + 1,
+      }));
+    }
   };
 
   decrementCounter = () => {
-    this.setState({
-      currentCounterState: this.state.currentCounterState - 1,
-    });
+    if (this.state.currentCounterState > -10) {
+      this.setState((state) => ({
+        currentCounterState: state.currentCounterState - 1,
+      }));
+    }
   };
 
   resetCounterToInitialValue = () => {
