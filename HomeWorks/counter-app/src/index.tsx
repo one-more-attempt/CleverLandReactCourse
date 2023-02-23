@@ -7,9 +7,10 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const initialState = 10;
 root.render(
   <React.StrictMode>
-    <App />
+    <App counterState = {initialState} />
   </React.StrictMode>
 );
 

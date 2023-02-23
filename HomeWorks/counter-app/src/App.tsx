@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type AppProps = {
+  counterState: number;
+};
+
+type StateProps = {
+  currentCounterState: number;
+};
+
+class App extends Component<AppProps, StateProps> {
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      currentCounterState: this.props.counterState,
+    };
+  }
+
+  incrementCounter = () => {
+    this.setState({
+      currentCounterState: this.state.currentCounterState + 1,
+    });
+  };
+
+  decrementCounter = () => {
+    this.setState({
+      currentCounterState: this.state.currentCounterState - 1,
+    });
+  };
+
+  resetCounterToInitialValue = () => {
+    this.setState({
+      currentCounterState: this.props.counterState,
+    });
+  };
+
+  setCounterToRandomValue = () => {
+    this.setState({
+      currentCounterState: Math.floor(Math.random() * 10) + 1,
+    });
+  };
+
+  render() {
+    const { currentCounterState } = this.state;
+    const {
+      incrementCounter,
+      decrementCounter,
+      setCounterToRandomValue,
+      resetCounterToInitialValue,
+    } = this;
+    return (
+      <div className="app">
+        <div className="counter">{currentCounterState}</div>
+        <div className="controls">
+          <button onClick={incrementCounter}>INC</button>
+          <button onClick={decrementCounter}>DEC</button>
+          <button onClick={setCounterToRandomValue}>RND</button>
+          <button onClick={resetCounterToInitialValue}>RESET</button>
+        </div>
+      </div>
+    );
+  }
 }
-
 export default App;
