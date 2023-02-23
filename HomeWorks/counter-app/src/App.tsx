@@ -17,7 +17,7 @@ class App extends Component<AppProps, StateProps> {
     };
   }
 
-  incrementCounter = () => {
+  incrementCounterValue = () => {
     if (this.state.currentCounterStateValue < 10) {
       this.setState((state) => ({
         currentCounterStateValue: state.currentCounterStateValue + 1,
@@ -25,7 +25,7 @@ class App extends Component<AppProps, StateProps> {
     }
   };
 
-  decrementCounter = () => {
+  decrementCounterValue = () => {
     if (this.state.currentCounterStateValue > -10) {
       this.setState((state) => ({
         currentCounterStateValue: state.currentCounterStateValue - 1,
@@ -48,8 +48,8 @@ class App extends Component<AppProps, StateProps> {
   render() {
     const { currentCounterStateValue } = this.state;
     const {
-      incrementCounter,
-      decrementCounter,
+      incrementCounterValue,
+      decrementCounterValue,
       setCounterToRandomValue,
       resetCounterToInitialValue,
     } = this;
@@ -57,8 +57,8 @@ class App extends Component<AppProps, StateProps> {
       <div className="app">
         <div className="counter">{currentCounterStateValue}</div>
         <div className="controls">
-          <button onClick={incrementCounter}>INC</button>
-          <button onClick={decrementCounter}>DEC</button>
+          <button onClick={incrementCounterValue}>INC</button>
+          <button onClick={decrementCounterValue}>DEC</button>
           <button onClick={setCounterToRandomValue}>RND</button>
           <button onClick={resetCounterToInitialValue}>RESET</button>
         </div>
