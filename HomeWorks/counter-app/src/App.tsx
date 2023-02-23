@@ -2,51 +2,51 @@ import { Component } from "react";
 import "./App.css";
 
 type AppProps = {
-  counterState: number;
+  initialCounterValue: number;
 };
 
 type StateProps = {
-  currentCounterState: number;
+  currentCounterStateValue: number;
 };
 
 class App extends Component<AppProps, StateProps> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      currentCounterState: this.props.counterState,
+      currentCounterStateValue: this.props.initialCounterValue,
     };
   }
 
   incrementCounter = () => {
-    if (this.state.currentCounterState < 10) {
+    if (this.state.currentCounterStateValue < 10) {
       this.setState((state) => ({
-        currentCounterState: state.currentCounterState + 1,
+        currentCounterStateValue: state.currentCounterStateValue + 1,
       }));
     }
   };
 
   decrementCounter = () => {
-    if (this.state.currentCounterState > -10) {
+    if (this.state.currentCounterStateValue > -10) {
       this.setState((state) => ({
-        currentCounterState: state.currentCounterState - 1,
+        currentCounterStateValue: state.currentCounterStateValue - 1,
       }));
     }
   };
 
   resetCounterToInitialValue = () => {
     this.setState({
-      currentCounterState: this.props.counterState,
+      currentCounterStateValue: this.props.initialCounterValue,
     });
   };
 
   setCounterToRandomValue = () => {
     this.setState({
-      currentCounterState: Math.floor(Math.random() * 10) + 1,
+      currentCounterStateValue: Math.floor(Math.random() * 10) + 1,
     });
   };
 
   render() {
-    const { currentCounterState } = this.state;
+    const { currentCounterStateValue } = this.state;
     const {
       incrementCounter,
       decrementCounter,
@@ -55,7 +55,7 @@ class App extends Component<AppProps, StateProps> {
     } = this;
     return (
       <div className="app">
-        <div className="counter">{currentCounterState}</div>
+        <div className="counter">{currentCounterStateValue}</div>
         <div className="controls">
           <button onClick={incrementCounter}>INC</button>
           <button onClick={decrementCounter}>DEC</button>
