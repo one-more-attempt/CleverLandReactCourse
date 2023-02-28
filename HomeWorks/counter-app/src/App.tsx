@@ -1,26 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type AppProps = {
+  initialCounterValue: number;
+};
+
+type StateProps = {
+  currentCounterStateValue: number;
+};
+
+class App extends Component<AppProps, StateProps> {
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      currentCounterStateValue: this.props.initialCounterValue,
+    };
+  }
+
+  incrementCounterValue = () => {
+    if (this.state.currentCounterStateValue < 10) {
+      this.setState((state) => ({
+        currentCounterStateValue: state.currentCounterStateValue + 1,
+      }));
+    }
+  };
+
+  decrementCounterValue = () => {
+    if (this.state.currentCounterStateValue > -10) {
+      this.setState((state) => ({
+        currentCounterStateValue: state.currentCounterStateValue - 1,
+      }));
+    }
+  };
+
+  resetCounterToInitialValue = () => {
+    this.setState({
+      currentCounterStateValue: this.props.initialCounterValue,
+    });
+  };
+
+  setCounterToRandomValue = () => {
+    this.setState({
+      currentCounterStateValue: Math.floor(Math.random() * 10) + 1,
+    });
+  };
+
+  render() {
+    const { currentCounterStateValue } = this.state;
+    const {
+      incrementCounterValue,
+      decrementCounterValue,
+      setCounterToRandomValue,
+      resetCounterToInitialValue,
+    } = this;
+    return (
+      <div className="app">
+        <div className="counter">{currentCounterStateValue}</div>
+        <div className="controls">
+          <button onClick={incrementCounterValue}>INC</button>
+          <button onClick={decrementCounterValue}>DEC</button>
+          <button onClick={setCounterToRandomValue}>RND</button>
+          <button onClick={resetCounterToInitialValue}>RESET</button>
+        </div>
+      </div>
+    );
+  }
 }
-
 export default App;
