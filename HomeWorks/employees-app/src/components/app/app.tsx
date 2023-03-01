@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 
 import { AppInfo } from "../app-info/app-info";
@@ -8,27 +8,47 @@ import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
 
-import { employeeDB as employeeMockedinitialState } from "../../constants/employeeDB";
+import { fetchReducer, INITIAL_STATE } from "../../reducer/reducer";
+import { FetchReducerActions } from "../../enums/fetchReducerActions";
+
 import { serverURL } from "../../constants/server-url";
-import type { EmployeeListTypes } from "../../types/types";
 import "./app.css";
 
 export const App = () => {
+  const [globalState, dispatchToFetchReducer] = useReducer(
+    fetchReducer,
+    INITIAL_STATE
+  );
   const [employeesDBState, setEmployeesDBState] = useState(
-    employeeMockedinitialState
+    globalState.employeesData
   );
   const [employeesDBBackup, setEmployeesDBBackup] = useState(employeesDBState);
-  const [dataFromServerIsIsReady, setDataFromServerIsIsReady] = useState(false);
+
+  const getDataFromServer = () => {
+    dispatchToFetchReducer({ type: FetchReducerActions.FETCH_START });
+    axios
+      .get(serverURL.allEmployees)
+      .then((response) => {
+        const dataFromServer = response.data;
+        dispatchToFetchReducer({
+          type: FetchReducerActions.FETCH_SUCCESS,
+          payload: dataFromServer,
+        });
+      })
+      .catch(function (error) {
+        const errorMessage: string = error.message;
+        dispatchToFetchReducer({
+          type: FetchReducerActions.FETCH_ERROR,
+          payload: errorMessage,
+        });
+      });
+  };
 
   useEffect(() => {
-    axios.get(serverURL.allEmployees).then((response) => {
-      const dataFromServer = response.data;
-      setEmployeesDBState(dataFromServer);
-      setDataFromServerIsIsReady(true);
-    });
+    getDataFromServer();
   }, []);
 
-  if (dataFromServerIsIsReady) {
+  if (globalState.dataFromServerIsReady) {
     return (
       <div className="app">
         <AppInfo
@@ -63,7 +83,12 @@ export const App = () => {
         />
       </div>
     );
-  } else {
-    return <Loader />;
   }
+  return (
+    <Loader
+      errorMessage={globalState.errorMessage}
+      getDataFromServer={getDataFromServer}
+      isDataloading={globalState.isDataloading}
+    />
+  );
 };

@@ -27,6 +27,8 @@ export const EmployeesAddForm = ({
     setInputSalary(newInputSalaryValue);
   };
 
+  // 1 func to 2 inputs?
+
   const addNewEmployee = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (inputSalary.length >= 2 && inputName.length >= 5) {

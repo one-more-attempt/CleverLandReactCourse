@@ -2,3 +2,19 @@
   margin: 0 auto;
   max-width: 1000px;
 }
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+  margin: 20% auto;
+}
+
+.error-message {
+  margin-top: 20px;
+}
+.try-again-button {
+  margin-top: 10px;
+}
