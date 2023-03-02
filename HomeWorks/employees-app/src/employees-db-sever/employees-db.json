@@ -5,7 +5,7 @@
       "name": "John Dorian",
       "salary": 1100,
       "isHaveSalaryBonus": false,
-      "onRise": true
+      "onRise": false
     },
     {
       "id": 2,
