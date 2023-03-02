@@ -48,8 +48,6 @@ export const EmployeesListItem = ({
       })
       .catch(function (error) {
         const errorMessage: string = error.message;
-        console.log(errorMessage);
-
         dispatchToFetchReducer({
           type: FetchReducerActions.FETCH_ERROR,
           payload: errorMessage,
@@ -79,8 +77,6 @@ export const EmployeesListItem = ({
       })
       .catch(function (error) {
         const errorMessage: string = error.message;
-        console.log(errorMessage);
-
         dispatchToFetchReducer({
           type: FetchReducerActions.FETCH_ERROR,
           payload: errorMessage,
@@ -110,8 +106,6 @@ export const EmployeesListItem = ({
       })
       .catch(function (error) {
         const errorMessage: string = error.message;
-        console.log(errorMessage);
-
         dispatchToFetchReducer({
           type: FetchReducerActions.FETCH_ERROR,
           payload: errorMessage,

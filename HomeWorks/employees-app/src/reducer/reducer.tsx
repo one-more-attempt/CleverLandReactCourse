@@ -56,18 +56,6 @@ export const fetchReducer = (
         ...state,
         employeesData: action.payload,
       };
-    case FetchReducerActions.SET_LOCAL:
-      return {
-        ...state,
-        employeesData: state.employeesDataCopy,
-      };
-
-    // employeesData: employeeInitialState,
-    // employeesDataCopy: employeeInitialState,
-    // dataFromServerIsReady: false,
-    // errorMessage: "",
-    // isDataloading: false,
-
     default:
       return state;
   }
