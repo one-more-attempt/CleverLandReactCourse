@@ -1,18 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
+import axios from "axios";
+import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import {
+  FetchReducerStateTypes,
+  FetchReducerActionType,
+} from "../../reducer/reducer";
+import { serverURL } from "../../constants/server-urls";
 import type { EmployeeListTypes } from "../../types/types";
 import "./employees-add-form.css";
 
 type EmployeesAddFormProps = {
-  employeesDBState: EmployeeListTypes[];
-  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  globalState: FetchReducerStateTypes;
+  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const EmployeesAddForm = ({
-  employeesDBState,
-  setEmployeesDBState,
-  setEmployeesDBBackup,
+  globalState,
+  dispatchToFetchReducer,
 }: EmployeesAddFormProps) => {
   const [inputName, setInputName] = useState<string>("");
   const [inputSalary, setInputSalary] = useState<string>("");
@@ -27,29 +32,46 @@ export const EmployeesAddForm = ({
     setInputSalary(newInputSalaryValue);
   };
 
-  // 1 func to 2 inputs?
-
   const addNewEmployee = (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     if (inputSalary.length >= 2 && inputName.length >= 5) {
-      let currentLastIdInDB: number = Math.max(...employeesDBState.map(({ id }) => id));
+      let currentLastIdInDB: number = Math.max(
+        ...globalState.employeesData.map(({ id }) => id)
+      );
       const newLastID = currentLastIdInDB + 1;
 
       const newEmployeeItem: EmployeeListTypes = {
         name: inputName,
         salary: Number(inputSalary),
         id: newLastID,
-        increase: false,
+        isHaveSalaryBonus: false,
+        onRise: false,
       };
 
-      const newItemList: EmployeeListTypes[] = [...employeesDBState, newEmployeeItem];
-      setEmployeesDBState(newItemList);
-      setEmployeesDBBackup(newItemList);
-      setInputName("");
-      setInputSalary("");
+      dispatchToFetchReducer({ type: FetchReducerActions.FETCH_START });
+      axios
+        .post(serverURL.allEmployees, newEmployeeItem)
+        .then(() => {
+          axios.get(serverURL.allEmployees).then((response) => {
+            const dataFromServer = response.data;
+            dispatchToFetchReducer({
+              type: FetchReducerActions.FETCH_SUCCESS,
+              payload: dataFromServer,
+            });
+          });
+        })
+        .catch(function (error) {
+          const errorMessage: string = error.message;
+          console.log(errorMessage);
+
+          dispatchToFetchReducer({
+            type: FetchReducerActions.FETCH_ERROR,
+            payload: errorMessage,
+          });
+        });
     }
   };
-
   return (
     <div className="app-add-form">
       <h3>Добавьте нового сотрудника</h3>

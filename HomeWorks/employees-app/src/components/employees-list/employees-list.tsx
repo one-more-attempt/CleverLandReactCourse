@@ -1,28 +1,30 @@
 import { Dispatch, SetStateAction } from "react";
 import { EmployeesListItem } from "../employees-list-item/employees-list-item";
 import type { EmployeeListTypes } from "../../types/types";
+import type {
+  FetchReducerStateTypes,
+  FetchReducerActionType,
+} from "../../reducer/reducer";
+
 import "./employees-list.css";
 
 type EmployeesListProps = {
-  employeesDBState: EmployeeListTypes[];
-  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  globalState: FetchReducerStateTypes;
+  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const EmployeesList = ({
-  employeesDBState,
-  setEmployeesDBBackup,
-  setEmployeesDBState,
+  globalState,
+  dispatchToFetchReducer,
 }: EmployeesListProps) => {
   return (
     <ul className="app-list list-group">
-      {employeesDBState.map((item) => (
+      {globalState.employeesData.map((item) => (
         <EmployeesListItem
-          setEmployeesDBBackup={setEmployeesDBBackup}
-          setEmployeesDBState={setEmployeesDBState}
-          employeeDB={employeesDBState}
           listItem={item}
           key={item.id}
+          globalState={globalState}
+          dispatchToFetchReducer={dispatchToFetchReducer}
         />
       ))}
     </ul>

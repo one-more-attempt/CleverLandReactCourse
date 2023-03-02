@@ -1,17 +1,22 @@
+import { Dispatch } from "react";
 import type { EmployeeListTypes } from "../../types/types";
+import type {
+  FetchReducerStateTypes,
+  FetchReducerActionType,
+} from "../../reducer/reducer";
 import "./app-info.css";
 
+type AppInfoProps = {
+  globalState: FetchReducerStateTypes;
+  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
+};
 
-type AppInfoProps =  {
-  employeesDBState: EmployeeListTypes[];
-  employeesDBBackup: EmployeeListTypes[];
-}
-
-export const AppInfo = ({ employeesDBState, employeesDBBackup }: AppInfoProps) => {
-  const quantityOfAllEmployees = employeesDBBackup.length;
-  const quantityOfEmployeesWhoWillBeAwarded = employeesDBBackup.filter(
-    ({increase}) => increase === true
-  ).length;
+export const AppInfo = ({ globalState }: AppInfoProps) => {
+  const quantityOfAllEmployees = globalState.employeesDataCopy.length;
+  const quantityOfEmployeesWhoWillBeAwarded =
+    globalState.employeesDataCopy.filter(
+      ({ isHaveSalaryBonus }) => isHaveSalaryBonus === true
+    ).length;
 
   return (
     <div className="app-info">

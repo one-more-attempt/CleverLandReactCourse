@@ -1,30 +1,34 @@
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
+import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import {
+  FetchReducerActionType,
+  FetchReducerStateTypes,
+} from "../../reducer/reducer";
 import type { EmployeeListTypes } from "../../types/types";
 import "./search-panel.css";
 
 type SearchPanelProps = {
-  employeesDBState: EmployeeListTypes[];
-  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  employeesDBBackup: EmployeeListTypes[];
-  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  globalState: FetchReducerStateTypes;
+  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const SearchPanel = ({
-  employeesDBState,
-  setEmployeesDBBackup,
-  employeesDBBackup,
-  setEmployeesDBState,
+  globalState,
+  dispatchToFetchReducer,
 }: SearchPanelProps) => {
   const [inputSearchParam, setInputSearchParam] = useState("");
 
   const findEmployee = (event: React.FormEvent<HTMLInputElement>) => {
     const currentParam: string = event.currentTarget.value;
     setInputSearchParam(currentParam);
-    const newList = employeesDBBackup.filter(({ name }) =>
+    const newList = globalState.employeesDataCopy.filter(({ name }) =>
       name.toLocaleLowerCase().includes(currentParam.toLowerCase())
     );
-    setEmployeesDBState(newList);
+    dispatchToFetchReducer({
+      type: FetchReducerActions.UPDATE_LOCAL,
+      payload: newList,
+    });
   };
 
   return (

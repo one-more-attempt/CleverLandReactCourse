@@ -1,22 +1,24 @@
-import { employeeDB as employeeMockedinitialState } from "../constants/employeeDB";
+import { employeeInitialState } from "../constants/employeeInitialState";
 import type { EmployeeListTypes } from "../types/types";
 import { FetchReducerActions } from "../enums/fetchReducerActions";
 
-type FetchReducerStateTypes = {
+export type FetchReducerStateTypes = {
   employeesData: EmployeeListTypes[];
+  employeesDataCopy: EmployeeListTypes[];
   dataFromServerIsReady: boolean;
   errorMessage: string;
   isDataloading: boolean;
 };
 
-type FetchReducerActionType = {
+export type FetchReducerActionType = {
   type: FetchReducerActions;
   payload?: any;
-  // payload?: EmployeeListTypes[] | string 
+  // payload?: EmployeeListTypes[] | string
 };
 
-export const INITIAL_STATE = {
-  employeesData: employeeMockedinitialState,
+export const INITIAL_STATE: FetchReducerStateTypes = {
+  employeesData: employeeInitialState,
+  employeesDataCopy: employeeInitialState,
   dataFromServerIsReady: false,
   errorMessage: "",
   isDataloading: false,
@@ -31,11 +33,13 @@ export const fetchReducer = (
       return {
         ...state,
         isDataloading: true,
+        dataFromServerIsReady: false,
       };
     case FetchReducerActions.FETCH_SUCCESS:
       return {
         ...state,
         employeesData: action.payload,
+        employeesDataCopy: action.payload,
         dataFromServerIsReady: true,
         isDataloading: false,
       };
@@ -46,6 +50,24 @@ export const fetchReducer = (
         isDataloading: false,
         dataFromServerIsReady: false,
       };
+
+    case FetchReducerActions.UPDATE_LOCAL:
+      return {
+        ...state,
+        employeesData: action.payload,
+      };
+    case FetchReducerActions.SET_LOCAL:
+      return {
+        ...state,
+        employeesData: state.employeesDataCopy,
+      };
+
+    // employeesData: employeeInitialState,
+    // employeesDataCopy: employeeInitialState,
+    // dataFromServerIsReady: false,
+    // errorMessage: "",
+    // isDataloading: false,
+
     default:
       return state;
   }

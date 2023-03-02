@@ -11,7 +11,7 @@ import { Loader } from "../loader/loader";
 import { fetchReducer, INITIAL_STATE } from "../../reducer/reducer";
 import { FetchReducerActions } from "../../enums/fetchReducerActions";
 
-import { serverURL } from "../../constants/server-url";
+import { serverURL } from "../../constants/server-urls";
 import "./app.css";
 
 export const App = () => {
@@ -19,10 +19,6 @@ export const App = () => {
     fetchReducer,
     INITIAL_STATE
   );
-  const [employeesDBState, setEmployeesDBState] = useState(
-    globalState.employeesData
-  );
-  const [employeesDBBackup, setEmployeesDBBackup] = useState(employeesDBState);
 
   const getDataFromServer = () => {
     dispatchToFetchReducer({ type: FetchReducerActions.FETCH_START });
@@ -52,34 +48,28 @@ export const App = () => {
     return (
       <div className="app">
         <AppInfo
-          employeesDBBackup={employeesDBBackup}
-          employeesDBState={employeesDBState}
+          globalState={globalState}
+          dispatchToFetchReducer={dispatchToFetchReducer}
         />
 
         <div className="search-panel">
           <SearchPanel
-            employeesDBBackup={employeesDBBackup}
-            setEmployeesDBBackup={setEmployeesDBBackup}
-            employeesDBState={employeesDBState}
-            setEmployeesDBState={setEmployeesDBState}
+            globalState={globalState}
+            dispatchToFetchReducer={dispatchToFetchReducer}
           />
           <AppFilter
-            employeesDBBackup={employeesDBBackup}
-            setEmployeesDBBackup={setEmployeesDBBackup}
-            employeesDBState={employeesDBState}
-            setEmployeesDBState={setEmployeesDBState}
+            globalState={globalState}
+            dispatchToFetchReducer={dispatchToFetchReducer}
           />
         </div>
 
         <EmployeesList
-          employeesDBState={employeesDBState}
-          setEmployeesDBState={setEmployeesDBState}
-          setEmployeesDBBackup={setEmployeesDBBackup}
+          globalState={globalState}
+          dispatchToFetchReducer={dispatchToFetchReducer}
         />
         <EmployeesAddForm
-          employeesDBState={employeesDBState}
-          setEmployeesDBState={setEmployeesDBState}
-          setEmployeesDBBackup={setEmployeesDBBackup}
+          globalState={globalState}
+          dispatchToFetchReducer={dispatchToFetchReducer}
         />
       </div>
     );

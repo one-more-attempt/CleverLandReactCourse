@@ -2,39 +2,52 @@ import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import classNames from "classnames";
 import type { EmployeeListTypes } from "../../types/types";
+import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import {
+  FetchReducerActionType,
+  FetchReducerStateTypes,
+} from "../../reducer/reducer";
 import { FilterStates } from "../../enums/filterStates";
 import "./app-filter.css";
 
 type AppFilterProps = {
-  employeesDBState: EmployeeListTypes[];
-  setEmployeesDBState: Dispatch<SetStateAction<EmployeeListTypes[]>>;
-  employeesDBBackup: EmployeeListTypes[];
-  setEmployeesDBBackup: Dispatch<SetStateAction<EmployeeListTypes[]>>;
+  globalState: FetchReducerStateTypes;
+  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const AppFilter = ({
-  employeesDBBackup,
-  setEmployeesDBBackup,
-  employeesDBState,
-  setEmployeesDBState,
+  globalState,
+  dispatchToFetchReducer,
 }: AppFilterProps) => {
   const [activeBtn, setActiveBtn] = useState(FilterStates.All);
 
   const showAllEmploees = () => {
-    setEmployeesDBState(employeesDBBackup);
+    dispatchToFetchReducer({
+      type: FetchReducerActions.UPDATE_LOCAL,
+      payload: globalState.employeesDataCopy,
+    });
     setActiveBtn(FilterStates.All);
   };
+
   const showOnlyIncreasedEmployes = () => {
-    const newList = employeesDBBackup.filter(
-      ({ increase }) => increase === true
+    const newList = globalState.employeesDataCopy.filter(
+      ({ isHaveSalaryBonus }) => isHaveSalaryBonus === true
     );
-    setEmployeesDBState(newList);
+    dispatchToFetchReducer({
+      type: FetchReducerActions.UPDATE_LOCAL,
+      payload: newList,
+    });
     setActiveBtn(FilterStates.OnlyEncreased);
   };
 
   const showOnlyHighSalary = () => {
-    const newList = employeesDBBackup.filter(({ salary }) => salary >= 1000);
-    setEmployeesDBState(newList);
+    const newList = globalState.employeesDataCopy.filter(
+      ({ salary }) => salary >= 1000
+    );
+    dispatchToFetchReducer({
+      type: FetchReducerActions.UPDATE_LOCAL,
+      payload: newList,
+    });
     setActiveBtn(FilterStates.OnlyHigh);
   };
 

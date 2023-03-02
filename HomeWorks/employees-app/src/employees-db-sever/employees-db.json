@@ -4,49 +4,50 @@
       "id": 1,
       "name": "John Dorian",
       "salary": 1100,
-      "increase": false
+      "isHaveSalaryBonus": false,
+      "onRise": true
     },
     {
       "id": 2,
-      "name": "Hassan Schultz",
-      "salary": 1200,
-      "increase": true
-    },
-    {
-      "id": 3,
       "name": "Anisa Bryant",
       "salary": 80,
-      "increase": true
-    },
-    {
-      "id": 4,
-      "name": "John Dorian",
-      "salary": 52000,
-      "increase": false
-    },
-    {
-      "id": 5,
-      "name": "Syed Harding",
-      "salary": 1340,
-      "increase": true
+      "isHaveSalaryBonus": false,
+      "onRise": false
     },
     {
       "id": 6,
       "name": "Magnus Mills",
       "salary": 400,
-      "increase": false
+      "isHaveSalaryBonus": false,
+      "onRise": false
     },
     {
       "id": 7,
       "name": "Otto Elliott",
       "salary": 200,
-      "increase": false
+      "isHaveSalaryBonus": true,
+      "onRise": true
     },
     {
-      "id": 8,
-      "name": "Sarah Pratt",
-      "salary": 134,
-      "increase": false
+      "id": 3,
+      "name": "Anisa Bryant",
+      "salary": 80,
+      "isHaveSalaryBonus": true,
+      "onRise": true
+    },
+    {
+      "id": 4,
+      "name": "Magnus Mills",
+      "salary": 400,
+      "isHaveSalaryBonus": false,
+      "onRise": false
+    },
+    {
+      "id": 5,
+      "name": "Otto Elliott",
+      "salary": 200,
+      "isHaveSalaryBonus": false,
+      "onRise": false
     }
   ]
 }
