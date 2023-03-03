@@ -31,7 +31,7 @@ export const App = () => {
           payload: dataFromServer,
         });
       })
-      .catch(function (error) {
+      .catch((error) => {
         const errorMessage: string = error.message;
         dispatchToFetchReducer({
           type: FetchReducerActions.FETCH_ERROR,

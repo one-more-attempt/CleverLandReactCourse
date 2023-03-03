@@ -19,7 +19,7 @@
       "name": "Magnus Mills",
       "salary": 400,
       "isHaveSalaryBonus": false,
-      "onRise": false
+      "onRise": true
     },
     {
       "id": 7,
