@@ -5,7 +5,7 @@ import {
   FetchReducerActionType,
   FetchReducerStateTypes,
 } from "../../store/main-page";
-import { updadateLocal } from "../../store/main-page/actions";
+import { updateLocal } from "../../store/main-page/actions";
 import type { EmployeeListTypes } from "../../types/types";
 
 import "./search-panel.css";
@@ -27,7 +27,7 @@ export const SearchPanel = ({
     const newList = globalState.employeesDataCopy.filter(({ name }) =>
       name.toLocaleLowerCase().includes(currentParam.toLowerCase())
     );
-    dispatchToReducer(updadateLocal(newList));
+    dispatchToReducer(updateLocal(newList));
   };
 
   return (

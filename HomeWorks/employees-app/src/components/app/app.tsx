@@ -9,14 +9,9 @@ import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
 
 import { fetchReducer, INITIAL_STATE } from "../../store/main-page";
-import {
-  fetchStart,
-  fetchError,
-  fetchSuccess,
-  updadateLocal,
-} from "../../store/main-page/actions";
-
+import { getInitialDataFromServer } from "../../store/main-page/server-requests";
 import { serverURL } from "../../constants/server-urls";
+
 import "./app.css";
 
 export const App = () => {
@@ -25,19 +20,8 @@ export const App = () => {
     INITIAL_STATE
   );
 
-  const getDataFromServer = async () => {
-    dispatchToReducer(fetchStart());
-    try {
-      await axios.get(serverURL.allEmployees).then((response) => {
-        dispatchToReducer(fetchSuccess(response.data));
-      });
-    } catch ({ message }) {
-      dispatchToReducer(fetchError(message));
-    }
-  };
-
   useEffect(() => {
-    getDataFromServer();
+    getInitialDataFromServer(dispatchToReducer);
   }, []);
 
   if (globalState.dataFromServerIsReady) {
@@ -73,8 +57,9 @@ export const App = () => {
   return (
     <Loader
       errorMessage={globalState.errorMessage}
-      getDataFromServer={getDataFromServer}
+      getInitialDataFromServer={getInitialDataFromServer}
       isDataloading={globalState.isDataloading}
+      dispatchToReducer={dispatchToReducer}
     />
   );
 };

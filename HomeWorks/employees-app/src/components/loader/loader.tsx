@@ -1,20 +1,26 @@
+import { Dispatch } from "react";
+import { FetchReducerActionType } from "../../store/main-page/index";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
 
 type LoaderProps = {
   errorMessage: string;
-  getDataFromServer: () => void;
   isDataloading: boolean;
+  dispatchToReducer: Dispatch<FetchReducerActionType>;
+  getInitialDataFromServer: (
+    dispatchToReducer: Dispatch<FetchReducerActionType>
+  ) => void;
 };
 
 export const Loader = ({
   errorMessage,
   isDataloading,
-  getDataFromServer,
+  getInitialDataFromServer,
+  dispatchToReducer,
 }: LoaderProps) => {
   const TryToGetDataAgain = () => {
-    getDataFromServer();
+    getInitialDataFromServer(dispatchToReducer);
   };
 
   const loaderBlock = (

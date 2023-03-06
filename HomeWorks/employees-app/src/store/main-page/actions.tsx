@@ -15,7 +15,7 @@ export const fetchError = (inputData: any) => ({
   payload: inputData,
 });
 
-export const updadateLocal = (inputData: EmployeeListTypes[]) => ({
+export const updateLocal = (inputData: EmployeeListTypes[]) => ({
   type: FetchReducerActions.UPDATE_LOCAL,
   payload: inputData,
 });

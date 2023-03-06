@@ -7,7 +7,7 @@ import {
   fetchStart,
   fetchError,
   fetchSuccess,
-  updadateLocal,
+  updateLocal,
 } from "../main-page/actions";
 
 export const onDeleteItemFromServer = async (
@@ -51,6 +51,19 @@ export const onChangeRiseStatusOnServer = async (
     await axios.patch(serverURL.employee(currentItem.id), {
       onRise: !currentItem.onRise,
     });
+    await axios.get(serverURL.allEmployees).then((response) => {
+      dispatchToReducer(fetchSuccess(response.data));
+    });
+  } catch ({ message }) {
+    dispatchToReducer(fetchError(message));
+  }
+};
+
+export const getInitialDataFromServer = async (
+  dispatchToReducer: Dispatch<FetchReducerActionType>
+) => {
+  dispatchToReducer(fetchStart());
+  try {
     await axios.get(serverURL.allEmployees).then((response) => {
       dispatchToReducer(fetchSuccess(response.data));
     });

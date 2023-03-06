@@ -9,7 +9,7 @@ import {
   FetchReducerStateTypes,
 } from "../../store/main-page";
 import { FilterStates } from "../../enums/filterStates";
-import { updadateLocal } from "../../store/main-page/actions";
+import { updateLocal } from "../../store/main-page/actions";
 
 import "./app-filter.css";
 
@@ -25,7 +25,7 @@ export const AppFilter = ({
   const [activeBtn, setActiveBtn] = useState(FilterStates.All);
 
   const showAllEmploees = () => {
-    dispatchToReducer(updadateLocal(globalState.employeesDataCopy));
+    dispatchToReducer(updateLocal(globalState.employeesDataCopy));
     setActiveBtn(FilterStates.All);
   };
 
@@ -33,7 +33,7 @@ export const AppFilter = ({
     const newList = globalState.employeesDataCopy.filter(
       ({ isHaveSalaryBonus }) => isHaveSalaryBonus === true
     );
-    dispatchToReducer(updadateLocal(newList));
+    dispatchToReducer(updateLocal(newList));
     setActiveBtn(FilterStates.OnlyEncreased);
   };
 
@@ -41,7 +41,7 @@ export const AppFilter = ({
     const newList = globalState.employeesDataCopy.filter(
       ({ salary }) => salary >= 1000
     );
-    dispatchToReducer(updadateLocal(newList));
+    dispatchToReducer(updateLocal(newList));
     setActiveBtn(FilterStates.OnlyHigh);
   };
 
@@ -51,6 +51,9 @@ export const AppFilter = ({
       "btn-outline-light": activeBtn !== status,
     });
 
+  const buttons = [
+
+  ]
   return (
     <div className="btn-group">
       <button

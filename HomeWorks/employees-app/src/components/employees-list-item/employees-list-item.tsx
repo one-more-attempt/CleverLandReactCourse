@@ -15,7 +15,7 @@ import {
   fetchStart,
   fetchError,
   fetchSuccess,
-  updadateLocal,
+  updateLocal,
 } from "../../store/main-page/actions";
 import {
   onDeleteItemFromServer,
