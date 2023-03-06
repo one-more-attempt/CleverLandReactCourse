@@ -1,31 +1,31 @@
 import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import classNames from "classnames";
+
 import type { EmployeeListTypes } from "../../types/types";
-import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import { FetchReducerActions } from "../../store/action-types";
 import {
   FetchReducerActionType,
   FetchReducerStateTypes,
-} from "../../reducer/reducer";
+} from "../../store/main-page";
 import { FilterStates } from "../../enums/filterStates";
+import { updadateLocal } from "../../store/main-page/actions";
+
 import "./app-filter.css";
 
 type AppFilterProps = {
   globalState: FetchReducerStateTypes;
-  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
+  dispatchToReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const AppFilter = ({
   globalState,
-  dispatchToFetchReducer,
+  dispatchToReducer,
 }: AppFilterProps) => {
   const [activeBtn, setActiveBtn] = useState(FilterStates.All);
 
   const showAllEmploees = () => {
-    dispatchToFetchReducer({
-      type: FetchReducerActions.UPDATE_LOCAL,
-      payload: globalState.employeesDataCopy,
-    });
+    dispatchToReducer(updadateLocal(globalState.employeesDataCopy));
     setActiveBtn(FilterStates.All);
   };
 
@@ -33,10 +33,7 @@ export const AppFilter = ({
     const newList = globalState.employeesDataCopy.filter(
       ({ isHaveSalaryBonus }) => isHaveSalaryBonus === true
     );
-    dispatchToFetchReducer({
-      type: FetchReducerActions.UPDATE_LOCAL,
-      payload: newList,
-    });
+    dispatchToReducer(updadateLocal(newList));
     setActiveBtn(FilterStates.OnlyEncreased);
   };
 
@@ -44,10 +41,7 @@ export const AppFilter = ({
     const newList = globalState.employeesDataCopy.filter(
       ({ salary }) => salary >= 1000
     );
-    dispatchToFetchReducer({
-      type: FetchReducerActions.UPDATE_LOCAL,
-      payload: newList,
-    });
+    dispatchToReducer(updadateLocal(newList));
     setActiveBtn(FilterStates.OnlyHigh);
   };
 

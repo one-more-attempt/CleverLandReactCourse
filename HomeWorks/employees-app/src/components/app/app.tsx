@@ -8,36 +8,32 @@ import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
 
-import { fetchReducer, INITIAL_STATE } from "../../reducer/reducer";
-import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import { fetchReducer, INITIAL_STATE } from "../../store/main-page";
+import {
+  fetchStart,
+  fetchError,
+  fetchSuccess,
+  updadateLocal,
+} from "../../store/main-page/actions";
 
 import { serverURL } from "../../constants/server-urls";
 import "./app.css";
 
 export const App = () => {
-  const [globalState, dispatchToFetchReducer] = useReducer(
+  const [globalState, dispatchToReducer] = useReducer(
     fetchReducer,
     INITIAL_STATE
   );
 
-  const getDataFromServer = () => {
-    dispatchToFetchReducer({ type: FetchReducerActions.FETCH_START });
-    axios
-      .get(serverURL.allEmployees)
-      .then((response) => {
-        const dataFromServer = response.data;
-        dispatchToFetchReducer({
-          type: FetchReducerActions.FETCH_SUCCESS,
-          payload: dataFromServer,
-        });
-      })
-      .catch((error) => {
-        const errorMessage: string = error.message;
-        dispatchToFetchReducer({
-          type: FetchReducerActions.FETCH_ERROR,
-          payload: errorMessage,
-        });
+  const getDataFromServer = async () => {
+    dispatchToReducer(fetchStart());
+    try {
+      await axios.get(serverURL.allEmployees).then((response) => {
+        dispatchToReducer(fetchSuccess(response.data));
       });
+    } catch ({ message }) {
+      dispatchToReducer(fetchError(message));
+    }
   };
 
   useEffect(() => {
@@ -49,27 +45,27 @@ export const App = () => {
       <div className="app">
         <AppInfo
           globalState={globalState}
-          dispatchToFetchReducer={dispatchToFetchReducer}
+          dispatchToReducer={dispatchToReducer}
         />
 
         <div className="search-panel">
           <SearchPanel
             globalState={globalState}
-            dispatchToFetchReducer={dispatchToFetchReducer}
+            dispatchToReducer={dispatchToReducer}
           />
           <AppFilter
             globalState={globalState}
-            dispatchToFetchReducer={dispatchToFetchReducer}
+            dispatchToReducer={dispatchToReducer}
           />
         </div>
 
         <EmployeesList
           globalState={globalState}
-          dispatchToFetchReducer={dispatchToFetchReducer}
+          dispatchToReducer={dispatchToReducer}
         />
         <EmployeesAddForm
           globalState={globalState}
-          dispatchToFetchReducer={dispatchToFetchReducer}
+          dispatchToReducer={dispatchToReducer}
         />
       </div>
     );

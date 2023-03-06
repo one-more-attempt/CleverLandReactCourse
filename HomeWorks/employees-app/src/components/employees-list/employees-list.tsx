@@ -4,18 +4,18 @@ import type { EmployeeListTypes } from "../../types/types";
 import type {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../reducer/reducer";
+} from "../../store/main-page";
 
 import "./employees-list.css";
 
 type EmployeesListProps = {
   globalState: FetchReducerStateTypes;
-  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
+  dispatchToReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const EmployeesList = ({
   globalState,
-  dispatchToFetchReducer,
+  dispatchToReducer,
 }: EmployeesListProps) => {
   return (
     <ul className="app-list list-group">
@@ -24,7 +24,7 @@ export const EmployeesList = ({
           listItem={item}
           key={item.id}
           globalState={globalState}
-          dispatchToFetchReducer={dispatchToFetchReducer}
+          dispatchToReducer={dispatchToReducer}
         />
       ))}
     </ul>

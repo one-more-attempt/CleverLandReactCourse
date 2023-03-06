@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
-import { FetchReducerActions } from "../../enums/fetchReducerActions";
+import { FetchReducerActions } from "../../store/action-types";
 import {
   FetchReducerActionType,
   FetchReducerStateTypes,
-} from "../../reducer/reducer";
+} from "../../store/main-page";
+import { updadateLocal } from "../../store/main-page/actions";
 import type { EmployeeListTypes } from "../../types/types";
+
 import "./search-panel.css";
 
 type SearchPanelProps = {
   globalState: FetchReducerStateTypes;
-  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
+  dispatchToReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const SearchPanel = ({
   globalState,
-  dispatchToFetchReducer,
+  dispatchToReducer,
 }: SearchPanelProps) => {
   const [inputSearchParam, setInputSearchParam] = useState("");
 
@@ -25,10 +27,7 @@ export const SearchPanel = ({
     const newList = globalState.employeesDataCopy.filter(({ name }) =>
       name.toLocaleLowerCase().includes(currentParam.toLowerCase())
     );
-    dispatchToFetchReducer({
-      type: FetchReducerActions.UPDATE_LOCAL,
-      payload: newList,
-    });
+    dispatchToReducer(updadateLocal(newList));
   };
 
   return (

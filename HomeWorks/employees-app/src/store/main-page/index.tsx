@@ -1,6 +1,6 @@
-import { employeeInitialState } from "../constants/employeeInitialState";
-import type { EmployeeListTypes } from "../types/types";
-import { FetchReducerActions } from "../enums/fetchReducerActions";
+import { employeeInitialState } from "../../constants/employeeInitialState";
+import type { EmployeeListTypes } from "../../types/types";
+import { FetchReducerActions } from "../action-types";
 
 export type FetchReducerStateTypes = {
   employeesData: EmployeeListTypes[];

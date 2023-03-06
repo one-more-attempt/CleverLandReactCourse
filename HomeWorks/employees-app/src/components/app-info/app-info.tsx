@@ -3,12 +3,12 @@ import type { EmployeeListTypes } from "../../types/types";
 import type {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../reducer/reducer";
+} from "../../store/main-page";
 import "./app-info.css";
 
 type AppInfoProps = {
   globalState: FetchReducerStateTypes;
-  dispatchToFetchReducer: Dispatch<FetchReducerActionType>;
+  dispatchToReducer: Dispatch<FetchReducerActionType>;
 };
 
 export const AppInfo = ({ globalState }: AppInfoProps) => {
