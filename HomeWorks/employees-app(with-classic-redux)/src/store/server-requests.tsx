@@ -1,9 +1,9 @@
 import { Dispatch } from "react";
 import axios from "axios";
-import type { FetchReducerActionType } from "./index";
+import type { FetchReducerActionType } from "./fetch-reducer";
 import type { EmployeeListTypes } from "../types/types";
 import { serverURL } from "../constants/server-urls";
-import { fetchStart, fetchError, fetchSuccess, updateLocal } from "../store/actions";
+import { fetchStart, fetchError, fetchSuccess } from "../store/actions";
 
 export const onDeleteItemFromServer = async (
   dispatchToReducer: Dispatch<FetchReducerActionType>,

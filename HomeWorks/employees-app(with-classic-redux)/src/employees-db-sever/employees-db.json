@@ -4,7 +4,7 @@
       "id": 1,
       "name": "John Dorian",
       "salary": 1100,
-      "isHaveSalaryBonus": true,
+      "isHaveSalaryBonus": false,
       "onRise": false
     },
     {
@@ -18,7 +18,7 @@
       "id": 7,
       "name": "Otto Elliott",
       "salary": 200,
-      "isHaveSalaryBonus": true,
+      "isHaveSalaryBonus": false,
       "onRise": true
     },
     {

@@ -1,11 +1,11 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch} from "react";
 import { useState } from "react";
 import axios from "axios";
 import { FetchReducerActions } from "../../store/action-types";
 import {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../store";
+} from "../../store/fetch-reducer";
 import { serverURL } from "../../constants/server-urls";
 import type { EmployeeListTypes } from "../../types/types";
 import "./employees-add-form.css";

@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { FetchReducerActionType } from "../../store/";
+import { FetchReducerActionType } from "../../store/fetch-reducer";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Button from "@mui/material/Button";
