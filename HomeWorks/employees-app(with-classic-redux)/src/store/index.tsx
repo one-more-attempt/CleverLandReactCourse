@@ -1,8 +1,9 @@
-import { createStore } from "redux";
+import { createStore, compose } from "redux";
 import { fetchReducer } from "./fetch-reducer";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-export const store = createStore(fetchReducer);
+export const store = createStore(fetchReducer, composeWithDevTools());
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

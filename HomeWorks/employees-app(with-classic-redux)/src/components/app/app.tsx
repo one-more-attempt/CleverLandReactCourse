@@ -6,9 +6,9 @@ import { AppFilter } from "../app-filter/app-filter";
 import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
-
 import { getInitialDataFromServer } from "../../store/server-requests";
 import { useTypedDispatch, useTypedAppSelector } from "../../store";
+import "./app.css";
 
 export const App = () => {
   const globalState = useTypedAppSelector((state) => state);
