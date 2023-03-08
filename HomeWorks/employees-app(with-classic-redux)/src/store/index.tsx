@@ -9,10 +9,10 @@ import { FetchReducerStateTypes } from "./fetch-reducer";
 export interface DispatchAction extends Action {
   payload: Partial<FetchReducerStateTypes>;
 }
-export type AppDispatch = Dispatch<any>;
+export type AppDispatchType = Dispatch<any>;
 export const useTypedSelector: TypedUseSelectorHook<FetchReducerStateTypes> =
   useSelector;
-export const useTypedDispatch: () => AppDispatch = useDispatch;
+export const useTypedDispatch: () => AppDispatchType = useDispatch;
 
 export const store = createStore(
   fetchReducer,

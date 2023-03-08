@@ -1,5 +1,4 @@
-import { Dispatch, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { AppInfo } from "../app-info/app-info";
 import { SearchPanel } from "../search-panel/search-panel";
 import { AppFilter } from "../app-filter/app-filter";
@@ -7,7 +6,6 @@ import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
 import { getInitialDataFromServer } from "../../store/server-requests-middleware";
-import { FetchReducerStateTypes } from "../../store/fetch-reducer";
 import { useTypedSelector, useTypedDispatch } from "../../store/index";
 import "./app.css";
 

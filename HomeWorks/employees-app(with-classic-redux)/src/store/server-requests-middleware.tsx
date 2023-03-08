@@ -4,7 +4,20 @@ import type { FetchReducerActionType } from "./fetch-reducer";
 import type { EmployeeListTypes } from "../types/types";
 import { serverURL } from "../constants/server-urls";
 import { fetchStart, fetchError, fetchSuccess } from "./actions";
+import { AppDispatchType } from ".";
 
+//middleware
+export const getInitialDataFromServer =
+  () => async (dispatchToReducer: AppDispatchType) => {
+    dispatchToReducer(fetchStart());
+    try {
+      await axios.get(serverURL.allEmployees).then((response) => {
+        dispatchToReducer(fetchSuccess(response.data));
+      });
+    } catch ({ message }) {
+      dispatchToReducer(fetchError(message));
+    }
+  };
 
 export const onDeleteItemFromServer = async (
   dispatchToReducer: Dispatch<FetchReducerActionType>,
@@ -35,7 +48,6 @@ export const onCreateNewItemOnServer = async (
     dispatchToReducer(fetchError(message));
   }
 };
-
 
 export const onChangeSalaryBonusOnServer = async (
   dispatchToReducer: Dispatch<FetchReducerActionType>,
@@ -70,16 +82,3 @@ export const onChangeRiseStatusOnServer = async (
     dispatchToReducer(fetchError(message));
   }
 };
-
-//middleware
-export const getInitialDataFromServer =
-  () => async (dispatchToReducer: Dispatch<any>) => {
-    dispatchToReducer(fetchStart());
-    try {
-      await axios.get(serverURL.allEmployees).then((response) => {
-        dispatchToReducer(fetchSuccess(response.data));
-      });
-    } catch ({ message }) {
-      dispatchToReducer(fetchError(message));
-    }
-  };
