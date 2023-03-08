@@ -1,12 +1,10 @@
-import { Dispatch} from "react";
+import { Dispatch } from "react";
 import { useState } from "react";
-import axios from "axios";
-import { FetchReducerActions } from "../../store/action-types";
+import { onCreateNewItemOnServer } from "../../store/server-requests-middleware";
 import {
   FetchReducerStateTypes,
   FetchReducerActionType,
 } from "../../store/fetch-reducer";
-import { serverURL } from "../../constants/server-urls";
 import type { EmployeeListTypes } from "../../types/types";
 import "./employees-add-form.css";
 
@@ -48,26 +46,7 @@ export const EmployeesAddForm = ({
         isHaveSalaryBonus: false,
         onRise: false,
       };
-
-      dispatchToReducer({ type: FetchReducerActions.FETCH_START });
-      axios
-        .post(serverURL.allEmployees, newEmployeeItem)
-        .then(() => {
-          axios.get(serverURL.allEmployees).then((response) => {
-            const dataFromServer = response.data;
-            dispatchToReducer({
-              type: FetchReducerActions.FETCH_SUCCESS,
-              payload: dataFromServer,
-            });
-          });
-        })
-        .catch((error) => {
-          const errorMessage: string = error.message;
-          dispatchToReducer({
-            type: FetchReducerActions.FETCH_ERROR,
-            payload: errorMessage,
-          });
-        });
+      onCreateNewItemOnServer(dispatchToReducer, newEmployeeItem);
     }
   };
   return (

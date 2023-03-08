@@ -1,13 +1,21 @@
-import { createStore, compose } from "redux";
+import { Dispatch } from "react";
+import { Action, createStore, applyMiddleware } from "redux";
 import { fetchReducer } from "./fetch-reducer";
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+import { useSelector, TypedUseSelectorHook, useDispatch } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 
-export const store = createStore(fetchReducer, composeWithDevTools());
+import { FetchReducerStateTypes } from "./fetch-reducer";
+export interface DispatchAction extends Action {
+  payload: Partial<FetchReducerStateTypes>;
+}
+export type AppDispatch = Dispatch<any>;
+export const useTypedSelector: TypedUseSelectorHook<FetchReducerStateTypes> =
+  useSelector;
+export const useTypedDispatch: () => AppDispatch = useDispatch;
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-type DispatchFunc = () => AppDispatch;
-
-export const useTypedDispatch: DispatchFunc = useDispatch;
-export const useTypedAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const store = createStore(
+  fetchReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+export const dispatchToStore = store.dispatch;

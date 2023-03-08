@@ -10,7 +10,7 @@ import {
   onDeleteItemFromServer,
   onChangeSalaryBonusOnServer,
   onChangeRiseStatusOnServer,
-} from "../../store/server-requests";
+} from "../../store/server-requests-middleware";
 
 import "./employees-list-item.css";
 
