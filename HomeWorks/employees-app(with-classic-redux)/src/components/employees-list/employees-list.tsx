@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch} from "react";
 import { EmployeesListItem } from "../employees-list-item/employees-list-item";
-import type { EmployeeListTypes } from "../../types/types";
 import type {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../store/main-page";
+} from "../../store/fetch-reducer";
 
 import "./employees-list.css";
 

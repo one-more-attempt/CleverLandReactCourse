@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { Dispatch, SetStateAction } from "react";
-import { FetchReducerActions } from "../../store/action-types";
+import { Dispatch } from "react";
 import {
   FetchReducerActionType,
   FetchReducerStateTypes,
-} from "../../store/main-page";
-import { updateLocal } from "../../store/main-page/actions";
-import type { EmployeeListTypes } from "../../types/types";
-
+} from "../../store/fetch-reducer";
+import { updateLocal } from "../../store/actions";
 import "./search-panel.css";
 
 type SearchPanelProps = {

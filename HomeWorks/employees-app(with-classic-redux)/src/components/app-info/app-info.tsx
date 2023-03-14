@@ -1,9 +1,8 @@
 import { Dispatch } from "react";
-import type { EmployeeListTypes } from "../../types/types";
 import type {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../store/main-page";
+} from "../../store/fetch-reducer";
 import "./app-info.css";
 
 type AppInfoProps = {

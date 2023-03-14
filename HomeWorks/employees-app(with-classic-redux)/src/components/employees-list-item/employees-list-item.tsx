@@ -1,27 +1,16 @@
-import { useState } from "react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 
 import classNames from "classnames";
-import axios from "axios";
-
-import { serverURL } from "../../constants/server-urls";
-import { FetchReducerActions } from "../../store/action-types";
 import type { EmployeeListTypes } from "../../types/types";
 import type {
   FetchReducerStateTypes,
   FetchReducerActionType,
-} from "../../store/main-page";
-import {
-  fetchStart,
-  fetchError,
-  fetchSuccess,
-  updateLocal,
-} from "../../store/main-page/actions";
+} from "../../store/fetch-reducer";
 import {
   onDeleteItemFromServer,
   onChangeSalaryBonusOnServer,
   onChangeRiseStatusOnServer,
-} from "../../store/main-page/server-requests";
+} from "../../store/server-requests-middleware";
 
 import "./employees-list-item.css";
 

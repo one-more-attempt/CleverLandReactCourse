@@ -1,15 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 import { useState } from "react";
 import classNames from "classnames";
 
-import type { EmployeeListTypes } from "../../types/types";
-import { FetchReducerActions } from "../../store/action-types";
 import {
   FetchReducerActionType,
   FetchReducerStateTypes,
-} from "../../store/main-page";
+} from "../../store/fetch-reducer";
 import { FilterStates } from "../../enums/filterStates";
-import { updateLocal } from "../../store/main-page/actions";
+import { updateLocal } from "../../store/actions";
 
 import "./app-filter.css";
 
@@ -51,9 +49,6 @@ export const AppFilter = ({
       "btn-outline-light": activeBtn !== status,
     });
 
-  const buttons = [
-
-  ]
   return (
     <div className="btn-group">
       <button

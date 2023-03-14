@@ -1,27 +1,26 @@
-import { useState, useEffect, useReducer } from "react";
-import axios from "axios";
-
+import { useEffect } from "react";
 import { AppInfo } from "../app-info/app-info";
 import { SearchPanel } from "../search-panel/search-panel";
 import { AppFilter } from "../app-filter/app-filter";
 import { EmployeesList } from "../employees-list/employees-list";
 import { EmployeesAddForm } from "../employees-add-form/employees-add-form";
 import { Loader } from "../loader/loader";
-
-import { fetchReducer, INITIAL_STATE } from "../../store/main-page";
-import { getInitialDataFromServer } from "../../store/main-page/server-requests";
-import { serverURL } from "../../constants/server-urls";
-
+import { getInitialDataFromServer } from "../../store/server-requests-middleware";
+import { useTypedSelector, useTypedDispatch } from "../../store/index";
 import "./app.css";
 
 export const App = () => {
-  const [globalState, dispatchToReducer] = useReducer(
-    fetchReducer,
-    INITIAL_STATE
-  );
+  const globalState = useTypedSelector((state) => state);
+  const dispatchToReducer = useTypedDispatch ();
+
+  //demonstration of how redux thunk works
+  //allow to dispatch function, not only objects!
+  const dispatchGetInitialDataFromServer = () => {
+    dispatchToReducer(getInitialDataFromServer());
+  };
 
   useEffect(() => {
-    getInitialDataFromServer(dispatchToReducer);
+    dispatchGetInitialDataFromServer();
   }, []);
 
   if (globalState.dataFromServerIsReady) {
