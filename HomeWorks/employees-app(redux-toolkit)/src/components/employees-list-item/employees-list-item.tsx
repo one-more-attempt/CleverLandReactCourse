@@ -20,7 +20,7 @@ export const EmployeesListItem = ({ listItem }: EmployeesListItemProps) => {
     const foundItem = globalState.employeesData.find(
       ({ id }) => id === listItem.id
     );
-    if (foundItem) return foundItem;
+    return foundItem;
   };
   const giveSalaryBonusToEmployee = () => {
     const item = findCurrentEmployeeInDB();
