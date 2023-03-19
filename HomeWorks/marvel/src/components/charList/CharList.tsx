@@ -1,46 +1,26 @@
 import "./charList.scss";
 import abyss from "../../resources/img/abyss.jpg";
+import { useEffect, useState } from "react";
 
-const CharList = () => {
+const CharList = ({ charactersArray, setSelectedCharacter }: any) => {
   return (
     <div className="char__list">
       <ul className="char__grid">
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item char__item_selected">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
+        {charactersArray
+          ? charactersArray.map((item: any) => {
+              const charPhotoURL = `${item.thumbnail.path}.${item.thumbnail.extension}`;
+              return (
+                <li
+                  className="char__item"
+                  key={item.id}
+                  onClick={() => {setSelectedCharacter(item)}}
+                >
+                  <img src={charPhotoURL} alt="abyss" />
+                  <div className="char__name">{item.name}</div>
+                </li>
+              );
+            })
+          : null}
       </ul>
       <button className="button button__main button__long">
         <div className="inner">load more</div>
