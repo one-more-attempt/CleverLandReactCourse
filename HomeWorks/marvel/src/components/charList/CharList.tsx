@@ -2,7 +2,7 @@ import "./charList.scss";
 import abyss from "../../resources/img/abyss.jpg";
 import { useEffect, useState } from "react";
 
-const CharList = ({ charactersArray, setSelectedCharacter }: any) => {
+const CharList = ({ charactersArray, setSelectedCharacterID }: any) => {
   return (
     <div className="char__list">
       <ul className="char__grid">
@@ -13,7 +13,7 @@ const CharList = ({ charactersArray, setSelectedCharacter }: any) => {
                 <li
                   className="char__item"
                   key={item.id}
-                  onClick={() => {setSelectedCharacter(item)}}
+                  onClick={() => {setSelectedCharacterID(item.id)}}
                 >
                   <img src={charPhotoURL} alt="abyss" />
                   <div className="char__name">{item.name}</div>

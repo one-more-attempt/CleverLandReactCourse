@@ -10,8 +10,8 @@ export const marvelService = {
     });
     return data;
   },
-  getCharacterByID(id:string) {
-    const url = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey==9e10307b9422189c1aad1fae5ac11329`;
+  getCharacterById(id: string) {
+    const url = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=9e10307b9422189c1aad1fae5ac11329`;
     const data = axios.get(url).then((resp) => {
       return resp.data;
     });
