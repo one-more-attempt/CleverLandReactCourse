@@ -5,12 +5,10 @@ import { ErrorMessage } from "../errorMessage/ErrorMessage";
 import "./charInfo.scss";
 
 const CharInfo = ({ seletedCharacterID }: any) => {
-  console.log(seletedCharacterID);
   const [isLoading, setIsLoading] = useState(false);
   const [isHaveError, setIsHaveError] = useState(false);
   const [isDataReady, setisDataReady] = useState(false);
   const [currentCharData, setCurrentCharData] = useState();
-  console.log(currentCharData);
 
   const getCharacterById = async (seletedCharacterID: any) => {
     try {
@@ -25,7 +23,6 @@ const CharInfo = ({ seletedCharacterID }: any) => {
           setCurrentCharData(results);
           return results;
         });
-      console.log(itemFromServer);
       setIsLoading(false);
       setisDataReady(true);
     } catch (e) {
@@ -51,7 +48,6 @@ const CharInfo = ({ seletedCharacterID }: any) => {
   if (isHaveError) return <ErrorMessage />;
 
   if (isDataReady && currentCharData) {
-    console.log(currentCharData[0]);
     const currentChar: any = currentCharData[0];
     const selectedCharacterImgURL = `${currentChar.thumbnail.path}.${currentChar.thumbnail.extension}`;
     const selectedCharacterName = `${currentChar.name}`;

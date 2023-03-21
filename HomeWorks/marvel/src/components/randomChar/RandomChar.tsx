@@ -26,17 +26,12 @@ const RandomChar = () => {
           const {
             data: { results },
           } = resp;
-          console.log(results);
-          
           const maxValueOfRandom = results.length - 1;
           const randValue =
             Math.floor(Math.random() * (maxValueOfRandom - 0 + 1)) + 0;
           const randItemFromServer = results[randValue];
           return randItemFromServer;
         });
-
-      console.log(randItemFromServer);
-
       const charName = randItemFromServer.name;
       const charDescription = randItemFromServer.description;
       const charPhotoURL = `${randItemFromServer.thumbnail.path}.${randItemFromServer.thumbnail.extension}`;
@@ -53,7 +48,6 @@ const RandomChar = () => {
       });
     } catch (err: any) {
       setErrorStatus(true);
-      console.log(err);
     }
   };
 

@@ -11,7 +11,6 @@ import { type } from "os";
 export const CharactersTable = () => {
   const [charactersArray, setCharactersArray] = useState<any>();
   const [seletedCharacterID, setSelectedCharacterID] = useState(0);
-  console.log(seletedCharacterID);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingMoreData, setIsFetchingMoreData] = useState(false);
@@ -28,12 +27,9 @@ export const CharactersTable = () => {
           const {
             data: { results },
           } = resp;
-          console.log(resp.data);
-
           setCharactersArray(results);
           return results;
         });
-      console.log(itemsFromServer);
       setIsLoading(false);
       setisDataReady(true);
     } catch (e) {
@@ -77,12 +73,10 @@ export const CharactersTable = () => {
           } = resp;
           return results;
         });
-      console.log(itemsFromServer);
       const newState: any = [...charactersArray, ...itemsFromServer];
       setIsFetchingMoreData(false);
       setCharactersArray(newState);
     } catch (e) {
-      console.log(e);
       setIsFetchingMoreData(false);
     }
   };
