@@ -21,7 +21,7 @@ const RandomChar = () => {
     try {
       setIsLoading(true);
       const randItemFromServer = await marvelService
-        .getAllCharacters()
+        .getCharactersForRandom()
         .then((resp) => {
           const {
             data: { results },

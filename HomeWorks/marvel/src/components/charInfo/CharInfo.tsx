@@ -1,9 +1,8 @@
-import "./charInfo.scss";
-import thor from "../../resources/img/thor.jpeg";
+import { useEffect, useState } from "react";
 import { Skeleton } from "../skeleton/Skeleton";
 import { marvelService } from "../../services/marvelService";
-import { useEffect, useState } from "react";
 import { ErrorMessage } from "../errorMessage/ErrorMessage";
+import "./charInfo.scss";
 
 const CharInfo = ({ seletedCharacterID }: any) => {
   console.log(seletedCharacterID);
