@@ -41,7 +41,7 @@ export const getRandomCharacterFromServer =
           dispatch(randomCharSliceActions.fetchSuccess(newRandomCharacter));
         });
     } catch (message) {
-      dispatch(randomCharSliceActions.fetchError(`${message}`));
+      dispatch(randomCharSliceActions.fetchError(!!message));
       console.log(message);
     }
   };

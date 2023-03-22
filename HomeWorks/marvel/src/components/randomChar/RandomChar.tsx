@@ -21,7 +21,7 @@ const RandomChar = () => {
     let checkedCharacterInfoBlock;
     if (randomCharacterState.isDataloading) {
       checkedCharacterInfoBlock = <Spinner />;
-    } else if (randomCharacterState.errorMessage) {
+    } else if (randomCharacterState.error) {
       checkedCharacterInfoBlock = <ErrorMessage />;
     } else if (randomCharacterState.dataFromServerIsReady) {
       checkedCharacterInfoBlock = (

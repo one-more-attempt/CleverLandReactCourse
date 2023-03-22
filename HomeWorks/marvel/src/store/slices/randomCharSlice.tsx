@@ -11,7 +11,7 @@ export type RandomCharData = {
 export type RandomCharStateType = {
   randomCharData: RandomCharData;
   dataFromServerIsReady: boolean;
-  errorMessage: string;
+  error: boolean;
   isDataloading: boolean;
 };
 
@@ -24,7 +24,7 @@ const INITIAL_STATE: RandomCharStateType = {
     photoURL: "",
   },
   dataFromServerIsReady: false,
-  errorMessage: "",
+  error: false,
   isDataloading: false,
 };
 
@@ -43,8 +43,8 @@ export const randomCharSlice = createSlice({
       state.isDataloading = false;
     },
 
-    fetchError(state, action: PayloadAction<any>) {
-      state.errorMessage = action.payload;
+    fetchError(state, action: PayloadAction<boolean>) {
+      state.error = action.payload;
       state.isDataloading = false;
       state.dataFromServerIsReady = false;
     },
