@@ -1,24 +1,29 @@
-export const RandomCharInfo = ({ charState }: any) => {
+import type { RandomCharData } from "../../store/slices/randomCharSlice";
 
-  
-  const charDescription = charState.description
-    ? `${charState.description.substr(0, 200)}...`
+type RandomCharInfoProps = {
+  characterData: RandomCharData;
+};
+
+export const RandomCharInfo = ({ characterData }: RandomCharInfoProps) => {
+  const charDescription = characterData.description
+    ? `${characterData.description.substr(0, 200)}...`
     : `Sorry, we don't have description for this character.`;
+
   return (
     <>
       <img
-        src={charState.photoURL}
+        src={characterData.photoURL}
         alt="Random character"
         className="randomchar__img"
       />
       <div className="randomchar__info">
-        <p className="randomchar__name">{charState.name}</p>
+        <p className="randomchar__name">{characterData.name}</p>
         <p className="randomchar__descr">{charDescription}</p>
         <div className="randomchar__btns">
-          <a href={charState.homepage} className="button button__main">
+          <a href={characterData.homepage} className="button button__main">
             <div className="inner">homepage</div>
           </a>
-          <a href={charState.wikipage} className="button button__secondary">
+          <a href={characterData.wikipage} className="button button__secondary">
             <div className="inner">Wiki</div>
           </a>
         </div>

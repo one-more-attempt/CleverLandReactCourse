@@ -2,69 +2,39 @@ import { useState, useEffect } from "react";
 import { RandomCharInfo } from "./randomCharInfo";
 import { Spinner } from "../spinner/Spinner";
 import { ErrorMessage } from "../errorMessage/ErrorMessage";
-import { marvelService } from "../../services/marvelService";
+import { getRandomCharacterFromServer } from "../../store/server-requests";
+import { useAppDispatch, useAppSelector } from "../../store/hooks/redux-hooks";
+import { stateSelectors } from "../../store";
 import mjolnir from "../../resources/img/mjolnir.png";
 import "./randomChar.scss";
 
 const RandomChar = () => {
-  const [charState, setCharState] = useState({
-    name: "",
-    description: "",
-    homepage: "",
-    wikipage: "",
-    photoURL: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorStatus, setErrorStatus] = useState(false);
-
-  const getRandomChar = async () => {
-    try {
-      setIsLoading(true);
-      const randItemFromServer = await marvelService
-        .getCharactersForRandom()
-        .then((resp) => {
-          const {
-            data: { results },
-          } = resp;
-          const maxValueOfRandom = results.length - 1;
-          const randValue =
-            Math.floor(Math.random() * (maxValueOfRandom - 0 + 1)) + 0;
-          const randItemFromServer = results[randValue];
-          return randItemFromServer;
-        });
-      const charName = randItemFromServer.name;
-      const charDescription = randItemFromServer.description;
-      const charPhotoURL = `${randItemFromServer.thumbnail.path}.${randItemFromServer.thumbnail.extension}`;
-      const charHomePageURL = `${randItemFromServer.urls[0].url}`;
-      const charWikiURL = `${randItemFromServer.urls[1].url}`;
-      setIsLoading(false);
-      setErrorStatus(false);
-      setCharState({
-        name: `${charName}`,
-        description: `${charDescription}`,
-        homepage: `${charHomePageURL}`,
-        wikipage: `${charWikiURL}`,
-        photoURL: `${charPhotoURL}`,
-      });
-    } catch (err: any) {
-      setErrorStatus(true);
-    }
-  };
-
+  const randomCharacterState = useAppSelector(
+    stateSelectors.randomCharSliceData
+  );
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    getRandomChar();
+    dispatch(getRandomCharacterFromServer());
   }, []);
 
-  let randomCharFromServer = <RandomCharInfo charState={charState} />;
-
-  if (isLoading) {
-    randomCharFromServer = <Spinner />;
-  }
-  if (errorStatus) randomCharFromServer = <ErrorMessage />;
+  const checkCharacterInfoBlockStatus = () => {
+    let checkedCharacterInfoBlock;
+    if (randomCharacterState.isDataloading) {
+      checkedCharacterInfoBlock = <Spinner />;
+    } else if (randomCharacterState.errorMessage) {
+      checkedCharacterInfoBlock = <ErrorMessage />;
+    } else if (randomCharacterState.dataFromServerIsReady) {
+      checkedCharacterInfoBlock = (
+        <RandomCharInfo characterData={randomCharacterState.randomCharData} />
+      );
+    }
+    return checkedCharacterInfoBlock;
+  };
+  const characterInfoBlock = checkCharacterInfoBlockStatus();
 
   return (
     <div className="randomchar">
-      <div className="randomchar__block">{randomCharFromServer}</div>
+      <div className="randomchar__block">{characterInfoBlock}</div>
       <div className="randomchar__static">
         <p className="randomchar__title">
           Random character for today!
@@ -75,7 +45,7 @@ const RandomChar = () => {
         <button
           className="button button__main"
           onClick={() => {
-            getRandomChar();
+            dispatch(getRandomCharacterFromServer());
           }}
         >
           <div className="inner">try it</div>

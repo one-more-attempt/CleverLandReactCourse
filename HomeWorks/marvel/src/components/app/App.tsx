@@ -25,7 +25,7 @@ const App = () => {
         <main>
           <RandomChar />
           <div className="char__content">
-            <CharactersTable />
+            {/* <CharactersTable /> */}
           </div>
         </main>
       </div>
