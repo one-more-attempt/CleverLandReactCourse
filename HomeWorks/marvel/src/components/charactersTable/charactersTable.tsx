@@ -1,97 +1,68 @@
 import { useState, useEffect } from "react";
-
-import CharInfo from "../charInfo/CharInfo";
-import CharList from "../charList/CharList";
+import { useAppSelector, useAppDispatch } from "../../store/hooks/redux-hooks";
+import { stateSelectors } from "../../store";
 import { marvelService } from "../../services/marvelService";
-import decoration from "../../resources/img/vision.png";
+import {
+  getCharactersListFromServer,
+  getNewCharactersListFromServer,
+  ServerRequestsInitialParams,
+} from "../../store/server-requests";
+import { characterTableSliceActions } from "../../store/slices/charactersListSlice";
+import { CharInfo } from "../charInfo/CharInfo";
+import { CharList } from "../charList/CharList";
 import { Spinner } from "../spinner/Spinner";
 import { ErrorMessage } from "../errorMessage/ErrorMessage";
-import { type } from "os";
+import decoration from "../../resources/img/vision.png";
 
 export const CharactersTable = () => {
-  const [charactersArray, setCharactersArray] = useState<any>();
-  const [seletedCharacterID, setSelectedCharacterID] = useState(0);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFetchingMoreData, setIsFetchingMoreData] = useState(false);
-  const [isHaveError, setIsHaveError] = useState(false);
-  const [isDataReady, setisDataReady] = useState(false);
-
-  const getCharacters = async () => {
-    try {
-      setIsHaveError(false);
-      setIsLoading(true);
-      const itemsFromServer = await marvelService
-        .getAllCharacters()
-        .then((resp) => {
-          const {
-            data: { results },
-          } = resp;
-          setCharactersArray(results);
-          return results;
-        });
-      setIsLoading(false);
-      setisDataReady(true);
-    } catch (e) {
-      setIsHaveError(true);
-    }
-  };
+  const сharactersListState = useAppSelector(
+    stateSelectors.characterTableSliceData
+  );
+  const selectedCharacterState = useAppSelector(
+    stateSelectors.selectedCharacterSliceData
+  );
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    getCharacters();
+    dispatch(getCharactersListFromServer());
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", scrollHandler);
-    return function () {
-      document.removeEventListener("scroll", scrollHandler);
-    };
-  }, []);
+    if (сharactersListState.isFetchingMoreData) {
+      const currentRequestOffsetValue =
+        сharactersListState.backendArrayDetails.currentOffset;
+      const requestMaxValue =
+        сharactersListState.backendArrayDetails.allCharactersAmount;
+      const requestLimitValue = ServerRequestsInitialParams.limit;
+      const nextOffsetValue = currentRequestOffsetValue + requestLimitValue;
+      const lastArrayAmoutValue = requestMaxValue - currentRequestOffsetValue;
 
-  useEffect(() => {
-    if (isFetchingMoreData) {
-      getMoreCharacters();
+      //can get full 9 objects pull from backend
+      if (nextOffsetValue < requestMaxValue) {
+        dispatch(getNewCharactersListFromServer(nextOffsetValue));
+      }
+      //can't get full 9 objects pull from backend, so we need to get last objects (!== 9)
+      if (nextOffsetValue > requestMaxValue && lastArrayAmoutValue !== 0) {
+        const offsetValue = currentRequestOffsetValue + lastArrayAmoutValue;
+        dispatch(getNewCharactersListFromServer(offsetValue));
+      }
     }
-  }, [isFetchingMoreData]);
+  }, [сharactersListState.isFetchingMoreData]);
 
   const scrollHandler = () => {
     if (
       document.documentElement.scrollHeight -
         (document.documentElement.scrollTop + window.innerHeight) <
-      100
+      50
     )
-      setIsFetchingMoreData(true);
+      dispatch(characterTableSliceActions.setIsFetchingMoreData(true));
   };
 
-  const getMoreCharacters = async () => {
-    const offsetValue = charactersArray.length;
-    try {
-      const itemsFromServer = await marvelService
-        .loadMoreCharacters(`${offsetValue}`)
-        .then((resp) => {
-          const {
-            data: { results },
-          } = resp;
-          return results;
-        });
-      const newState: any = [...charactersArray, ...itemsFromServer];
-      setIsFetchingMoreData(false);
-      setCharactersArray(newState);
-    } catch (e) {
-      setIsFetchingMoreData(false);
-    }
-  };
-  if (isHaveError) return <ErrorMessage />;
-
-  if (isDataReady) {
+  if (сharactersListState.dataFromServerIsReady) {
     return (
       <>
-        <CharList
-          charactersArray={charactersArray}
-          setSelectedCharacterID={setSelectedCharacterID}
-          getMoreCharacters={getMoreCharacters}
-          isFetchingMoreData={isFetchingMoreData}
-        />
-        <CharInfo seletedCharacterID={seletedCharacterID} />
+        <CharList scrollHandler={scrollHandler} />
+
+        <CharInfo />
         <img className="bg-decoration" src={decoration} alt="vision" />
       </>
     );

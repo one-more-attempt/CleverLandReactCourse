@@ -3,10 +3,9 @@ import "./skeleton.scss";
 export const Skeleton = () => {
   return (
     <>
-      <p className="char__select">
-        Please select a character to see information
-      </p>
       <div className="skeleton">
+        <h3>Loading...</h3>
+        <br />
         <div className="pulse skeleton__header">
           <div className="pulse skeleton__circle"></div>
           <div className="pulse skeleton__mini"></div>

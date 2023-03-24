@@ -1,8 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { randomCharSliceReducer } from "./slices/randomCharSlice";
+import {characterTableSliceReducer} from './slices/charactersListSlice';
+import {selectedCharacterSliceReducer} from './slices/selectedCharacterSlice';
 
 const rootReducer = combineReducers({
   randomCharSliceReducer,
+  characterTableSliceReducer,
+  selectedCharacterSliceReducer
+
 });
 
 export const setupStore = () => {
