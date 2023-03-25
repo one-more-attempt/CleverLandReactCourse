@@ -88,8 +88,6 @@ export const getCharactersListFromServer =
           dispatch(
             characterTableSliceActions.addBackEndArrayInfo(backEndArrayInfo)
           );
-          // const newRequestOffsetValue = requestOffset+requestimit
-          // dispatch(characterTableSliceActions.updateCurrentOffset(newRequestOffsetValue));
           dispatch(characterTableSliceActions.fetchSuccess(charactersArray));
         });
     } catch (error) {
@@ -193,8 +191,6 @@ export const getCharacterFromServerById =
             selectedCharacterSliceActions.fetchSuccess(newSelectedCharacter)
           );
         });
-
-      // });
     } catch (message) {
       dispatch(selectedCharacterSliceActions.fetchError(!!message));
     }
