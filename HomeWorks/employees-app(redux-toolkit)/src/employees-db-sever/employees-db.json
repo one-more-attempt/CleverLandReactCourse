@@ -1,0 +1,53 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "John Dorian",
+      "salary": 1100,
+      "isHaveSalaryBonus": false,
+      "onRise": false
+    },
+    {
+      "id": 6,
+      "name": "Magnus Mills",
+      "salary": 400,
+      "isHaveSalaryBonus": false,
+      "onRise": true
+    },
+    {
+      "id": 7,
+      "name": "Otto Elliott",
+      "salary": 200,
+      "isHaveSalaryBonus": true,
+      "onRise": true
+    },
+    {
+      "id": 3,
+      "name": "Anisa Bryant",
+      "salary": 80,
+      "isHaveSalaryBonus": false,
+      "onRise": false
+    },
+    {
+      "id": 4,
+      "name": "Magnus Mills",
+      "salary": 400,
+      "isHaveSalaryBonus": true,
+      "onRise": false
+    },
+    {
+      "id": 5,
+      "name": "Otto Elliott",
+      "salary": 200,
+      "isHaveSalaryBonus": true,
+      "onRise": false
+    },
+    {
+      "name": "Bla bla",
+      "salary": 123123,
+      "id": 8,
+      "isHaveSalaryBonus": false,
+      "onRise": true
+    }
+  ]
+}
